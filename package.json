@@ -1,0 +1,19 @@
+{
+  "name": "clinics_service_app",
+  "version": "1.0.0",
+  "description": "Small microservice that provices data on UK clinics.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hassanmir92/clinics_service_app.git"
+  },
+  "author": "Hassan Mir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hassanmir92/clinics_service_app/issues"
+  },
+  "homepage": "https://github.com/Hassanmir92/clinics_service_app#readme"
+}
