@@ -25,6 +25,27 @@ app.get('/clinics/postcode/:postcode', function (req, res) {
   });
 });
 
+app.get('/clinics/city/:city', function (req, res) {
+  var city = req.params.city
+
+  // Calling the clinic city resource using the city name given as a parameter
+  request("https://data.gov.uk/data/api/service/health/clinics?city=" + city, function(error, response, body) {
+    var body = JSON.parse(body);
+    var results = {};
+
+    // Iterating through results to create a new object with all partial_postcodes found and how many of them where found
+    body.result.forEach(function(clinic) {
+      if (results[clinic.partial_postcode]) {
+        results[clinic.partial_postcode] += 1
+      } else {
+        results[clinic.partial_postcode] = 1
+      }
+    });
+
+    res.status(response.statusCode).json({ "results": results })
+  });
+});
+
 app.listen(3000, function () {
   console.log('App listening on port 3000');
 });
