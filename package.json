@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Hassanmir92/clinics_service_app/issues"
   },
-  "homepage": "https://github.com/Hassanmir92/clinics_service_app#readme"
+  "homepage": "https://github.com/Hassanmir92/clinics_service_app#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
