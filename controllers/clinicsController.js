@@ -1,4 +1,5 @@
 var request = require('request');
+var utils   = require('../utils/utils');
 
 function clinicsPostcode(req, res) {
   // Taking the first partial of postcode before the space
@@ -8,15 +9,7 @@ function clinicsPostcode(req, res) {
   request("https://data.gov.uk/data/api/service/health/clinics/partial_postcode?partial_postcode=" + partial_postcode, function(error, response, body) {
     var body = JSON.parse(body);
 
-    // Filter out results matching the full postcode and return with wanted attributes
-    var results = body.result.filter(function (clinic) {
-      return clinic.postcode == req.params.postcode;
-    }).map(function (clinic) {
-      return {
-        organisation_id: clinic.organisation_id,
-        name: clinic.name
-      };
-    });
+    var results = utils.matchFullPostcodeFilter(body.result, req.params.postcode);
 
     res.status(response.statusCode).json({ "results": results });
   });
@@ -28,16 +21,8 @@ function clinicsCity(req, res) {
   // Calling the clinic city resource using the city name given as a parameter
   request("https://data.gov.uk/data/api/service/health/clinics?city=" + city, function(error, response, body) {
     var body = JSON.parse(body);
-    var results = {};
 
-    // Iterating through results to create a new object with all partial_postcodes found and how many of them where found
-    body.result.forEach(function(clinic) {
-      if (results[clinic.partial_postcode]) {
-        results[clinic.partial_postcode] += 1;
-      } else {
-        results[clinic.partial_postcode] = 1;
-      }
-    });
+    var results = utils.partialPostcodeCounter(body.result);
 
     res.status(response.statusCode).json({ "results": results });
   });
