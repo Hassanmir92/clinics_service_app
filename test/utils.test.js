@@ -339,7 +339,7 @@ it('should match full postcode return result with organisation_id & name', funct
   ]);
 });
 
-it('should match full postcode return result with organisation_id & name', function() {
+it('contains all of the partial_postcodes found and how many of them where found', function() {
   var results = utils.partialPostcodeCounter(data.result);
 
   expect(results).toEqual({ "CR9": 2, "CR0": 8 });
